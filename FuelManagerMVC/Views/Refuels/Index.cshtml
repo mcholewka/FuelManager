@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FuelManagerMVC.Models.Refuel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+
+<div>
+    <div class="row">
+        <div class="col-9">
+            <h2 class="text-info">Refuel List</h2>
+        </div>
+        <div class="col-3">
+            <a asp-controller="Refuels" asp-action="AddRefuel" class="btn btn-info" style="color: white;">Add new refuel</a>
+        </div>
+
+    </div>
+   
+    <div class="col-12 border p-3 mt-3">
+        <table class="table" style="text-align: center;">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Station)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Station)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            <a class="btn btn-info" style="width: 80px;" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-success" style="width: 80px;" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-warning" style="width: 80px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
