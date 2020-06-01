@@ -22,9 +22,36 @@ namespace FuelManagerMVC.Controllers
             var list = await _db.Refuels.ToListAsync();
             return View(list);
         }
-        public IActionResult AddRefuel()
+
+        public IActionResult AddRefuel(int id = 0)
         {
-            return View();
+            if (id == 0)
+                return View(new Refuel());
+            else
+                return View(_db.Refuels.Find(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRefuel([Bind("Id,Station,Amount,Price")] Refuel refuel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (refuel.Id == 0)
+                    _db.Add(refuel);
+                else
+                    _db.Update(refuel);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(refuel);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var refuel = await _db.Refuels.FindAsync(id);
+            _db.Refuels.Remove(refuel);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
