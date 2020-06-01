@@ -32,7 +32,7 @@ namespace FuelManagerMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRefuel([Bind("Id,Station,Amount,Price")] Refuel refuel)
+        public async Task<IActionResult> AddRefuel([Bind("Id,Station,Amount,Price, RefuelDate")] Refuel refuel)
         {
             if (ModelState.IsValid)
             {

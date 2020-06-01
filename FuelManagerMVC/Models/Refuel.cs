@@ -18,6 +18,8 @@ namespace FuelManagerMVC.Models
         public decimal Amount { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime RefuelDate { get; set; }
 
     }
 }

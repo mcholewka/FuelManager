@@ -30,28 +30,34 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Amount)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RefuelDate)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Station)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Amount)
-                        </td>
-                        <td>
-                            <a class="btn btn-info" style="width: 80px;" asp-action="AddRefuel" asp-route-id="@item.Id">Edit</a>
-                            <a class="btn btn-success" style="width: 80px;" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a class="btn btn-warning" style="width: 80px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Station)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RefuelDate)
+                    </td>
+                    <td>
+                        <a class="btn btn-info" style="width: 80px;" asp-action="AddRefuel" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-success" style="width: 80px;" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-warning" style="width: 80px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
