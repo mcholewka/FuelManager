@@ -1,11 +1,101 @@
-﻿
+﻿@model IEnumerable<FuelManagerMVC.Models.Refuel>
 @{
     ViewData["Title"] = "Index";
 }
 
 <br />
+<h2 class="text-info">
+    Monthly stats:
+</h2>
+<div class="col-12">
+    <form asp-action="Index" asp-controller="Stats" method="POST">
+        <label class="control-label">Start:</label>
+        <input class="datefield" type="date" name="startDate" />
+        <label class="control-label">End:</label>
+        <input class="datefield" type="date" name="endDate" />
+        <input type="submit" value="View Report" />
+    </form>
+</div>
+@if (!ViewData.ModelState.IsValid)
+{
+    <b style="color: red;">@Html.ValidationMessage("RefuelDate")</b>
+    <b style="color: red;">@Html.ValidationMessage("Empty")</b>
+}
 
-<form action="Stats/Index" method="POST">
-    <input type="text" name="valueINeed" />
-    <input type="submit" value="View Report" />
-</form> 
+<div class="col-12 p-3 mt-3">
+    <table class="table" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    Total Amount
+                </th>
+                <th>
+                    Total Price
+                </th>
+                <th>
+                    Avarage price of liter
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @ViewData["allAmount"]
+                </td>
+                <td>
+                    @ViewData["allPrice"]
+                </td>
+                <td>
+                    @ViewData["avarage"]
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-12 border p-3 mt-3">
+    <table class="table" style="text-align: center;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Station)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RefuelDate)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Station)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RefuelDate)
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+

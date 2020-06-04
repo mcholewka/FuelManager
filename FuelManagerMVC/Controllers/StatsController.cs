@@ -27,25 +27,48 @@ namespace FuelManagerMVC.Controllers
                 allAmount += item.Amount;
                 allPrice += item.Price;
             }
+            var avarage = (allPrice / allAmount);
             ViewData["allAmount"] = allAmount;
             ViewData["allPrice"] = allPrice;
+            ViewData["avarage"] = avarage;
             return View(query);
         }
         [HttpPost]
-        public async Task<IActionResult> Index(string valueINeed)
+        public async Task<IActionResult> Index(DateTime startDate, DateTime endDate)
         {
-            var query = await _db.Refuels.Where(x => x.RefuelDate.Month == Int32.Parse(valueINeed)).ToListAsync();
-            decimal allAmount = 0;
-            decimal allPrice = 0;
-
-            foreach (var item in query)
+   
+            if(DateTime.Compare(startDate, endDate)>0)
             {
-                allAmount += item.Amount;
-                allPrice += item.Price;
+                ModelState.AddModelError("RefuelDate", "Wrong date format.");
+                return View();
             }
-            ViewData["allAmount"] = allAmount;
-            ViewData["allPrice"] = allPrice;
-            return View(query);
+            else
+            {
+                var query = await _db.Refuels.Where(x => x.RefuelDate > startDate && x.RefuelDate < endDate).ToListAsync();
+                decimal allAmount = 0;
+                decimal allPrice = 0;
+                if(query.Count!=0)
+                {
+                    foreach (var item in query)
+                    {
+                        allAmount += item.Amount;
+                        allPrice += item.Price;
+                    }
+                    var avarage = (allPrice / allAmount);
+                    ViewData["allAmount"] = allAmount;
+                    ViewData["allPrice"] = allPrice;
+                    ViewData["avarage"] = avarage;
+
+                    return View(query);
+                }
+                else
+                {
+                    ModelState.AddModelError("Empty", "No refuels in this time");
+
+                    return View();
+                }
+            }
+            
         }
     }
 }
